@@ -1,0 +1,31 @@
+<div style="overflow: auto; max-height: 500px;">
+  <table class="table table-sm table-hover">
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <input class="form-control" [(ngModel)]="searchTerm" placeholder="Filtro por Nome">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-12"></div>
+    </div>
+    <tr>
+      <td class="middle header">Nome Produto</td>
+      <td class="middle header">Valor Bruto</td>
+      <td class="middle header">Ativo</td>
+      <td class="middle header">Ações</td>
+    </tr>
+    <tr *ngFor="let produto of produtoService.listProduto | produtoFilter : searchTerm">
+      <td class="middle"> {{produto.nome}} </td>
+      <td class="middle"> {{produto.valorBruto}} </td>
+      <td class="middle"> {{produto.ativo ? 'Sim' : 'Não'}} </td>
+      <td class="middle">
+        <a class="btn" (click)="showForEdit(produto)">
+          <i class="fa fa-pencil-square-o"></i>
+        </a>
+        <a class="btn text-danger" (click)="onDelete(produto.id)">
+          <i class="fa fa-trash-o"></i>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>

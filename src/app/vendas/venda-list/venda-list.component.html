@@ -1,0 +1,17 @@
+<table class="table table-sm table-hover">
+  <div class="form-row">
+    <div class="form-group col-md-12"></div>
+  </div>
+  <tr>
+    <td class="middle header">Venda ID</td>
+    <td class="middle header">Vendedor</td>
+    <td class="middle header">Valor</td>
+    <td class="middle header">Comissão</td>
+  </tr>
+  <tr *ngFor="let venda of vendasService.listVendas | vendaFilter : dataAtual">
+  <td class="middle"> {{venda.id}} </td>
+  <td class="middle"> {{venda.Vendedor.nome}} </td>
+  <td class="middle"> R$ {{getValorVenda(venda.VendaProdutos) | number: '1.2-2'}} </td>
+  <td class="middle"> R$ {{(getValorVenda(venda.VendaProdutos) * (venda.porcentagemComissao / 100)) | number: '1.2-2'}} </td>
+  </tr>
+</table>

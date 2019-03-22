@@ -1,0 +1,87 @@
+<div class="form-row">
+  <div class="form-group col-md-8">
+    <select class="form-control" name="VendedorList" (change)="selectedChangeVendedorHandler($event)" required>
+      <option selected value="0">-- Selecione o Vendedor --</option>
+      <option *ngFor="let vendedor of vendedorService.listVendedor" value={{vendedor.id}}>
+        {{vendedor.nome}}
+      </option>
+    </select>
+  </div>
+</div>
+
+<form class="venda-form" #vendaForm="ngForm">
+
+  <input type="hidden" name="id" #id="ngModel" [(ngModel)]="vendasService.selectedVenda.id">
+  <input type="hidden" name="idVendedor" #idVendedor="ngModel" [(ngModel)]="this.selectedIdVendedor">
+
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <input type="hidden" name="dataVenda" #dataVenda="ngModel" [(ngModel)]="vendasService.selectedVenda.dataVenda">
+      <input class="form-control" title="Data da Venda" placeholder="Data da Venda" value="{{vendasService.selectedVenda.dataVenda | date:'dd/MM/yyyy'}}">
+    </div>
+    <div class="form-group col-md-4">
+      <input title='% Comissão' class="form-control" placeholder="Porcentagem Comissão" name="porcentagemComissao" #porcentagemComissao="ngModel"
+        [(ngModel)]="vendasService.selectedVenda.porcentagemComissao">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12"></div>
+  </div>
+
+</form>
+
+<div class="form-row">
+  <div class="form-group col-md-8">
+    <select class="form-control" name="ProdutoList" (change)="selectedChangeProdutoHandler($event)" required>
+      <option selected value="0">-- Selecione o Produto --</option>
+      <option *ngFor="let produto of produtoService.listProduto" value={{produto.id}}>
+        {{produto.nome}}
+      </option>
+    </select>
+  </div>
+  <div class="form-group col-md-4">
+    <button title="Adicionar produto a venda!" type="button" class="btn btn-lg btn-block btn-info" (click)="adicionarProduto(vendaForm)">
+      <i class="fa fa-plus"></i> Produto </button>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-12">
+    <table class="table table-sm table-hover">
+
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label form-control style="font-weight: bold">Produtos incluidos na Venda:</label>
+        </div>
+      </div>
+      <tr>
+        <td class="middle header">Nome Produto</td>
+        <td class="middle header">Valor Bruto</td>
+        <td class="middle header"></td>
+      </tr>
+      <tr *ngFor="let produto of listaProdutoVenda">
+        <td class="middle"> {{produto.nome}} </td>
+        <td class="middle"> {{produto.valorBruto}} </td>
+        <td class="middle">
+          <a class="btn text-danger" (click)="onDelete(produto)">
+            <i title="Excluir Produto" class="fa fa-trash-o"></i>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<form class="venda-form" (ngSubmit)="onSubmit(vendaForm, listaProdutoVenda)">
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <button type="submit" class="btn btn-lg btn-block btn-info">
+        <i class="fa fa-floppy-o"></i> Realizar Venda </button>
+    </div>
+    <div class="form-group col-md-4">
+      <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(vendaForm)">
+        <i class="fa fa-repeat"></i> Limpar </button>
+    </div>
+  </div>
+</form>
